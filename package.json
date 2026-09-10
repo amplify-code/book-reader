@@ -1,5 +1,5 @@
 {
-    "name": "@amplify-code/ebook-reader",
+    "name": "@amplify-code/book-reader",
     "version": "1.0.0",
     "description": "Headless Vue 3 ebook reading surface: page-turning spread, zoom, swipe and link hotspots, with all chrome left to the host.",
     "keywords": [
@@ -15,13 +15,13 @@
     ],
     "license": "MIT",
     "author": "Colin Cameron <colin@amplifycode.com>",
-    "homepage": "https://github.com/amplify-code/ebook-reader#readme",
+    "homepage": "https://github.com/amplify-code/book-reader#readme",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/amplify-code/ebook-reader.git"
+        "url": "git+https://github.com/amplify-code/book-reader.git"
     },
     "bugs": {
-        "url": "https://github.com/amplify-code/ebook-reader/issues"
+        "url": "https://github.com/amplify-code/book-reader/issues"
     },
     "type": "module",
     "main": "src/index.js",

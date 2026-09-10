@@ -1,4 +1,4 @@
-# @amplify-code/ebook-reader
+# @amplify-code/book-reader
 
 A headless Vue 3 **ebook reader**. It renders a book as a page-turning spread
 with pinch/scroll zoom, swipe and clickable link hotspots, plus optional
@@ -22,14 +22,14 @@ Tailwind and be configured to see the component. Add the package to your
 ```js
 content: [
     // …your app globs…
-    './node_modules/@amplify-code/ebook-reader/src/**/*.vue',
+    './node_modules/@amplify-code/book-reader/src/**/*.vue',
 ],
 ```
 
 ## Install
 
 ```bash
-npm install @amplify-code/ebook-reader @thesoulfresh/pan-z
+npm install @amplify-code/book-reader @thesoulfresh/pan-z
 ```
 
 Or copy the `src/` folder into your project.
@@ -41,7 +41,7 @@ Give the reader a sized parent and build your own controls around it:
 ```vue
 <script setup>
 import { ref } from 'vue';
-import { EbookReader } from '@amplify-code/ebook-reader';
+import { EbookReader } from '@amplify-code/book-reader';
 
 const reader = ref(null);
 const page = ref(1);
