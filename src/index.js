@@ -1,11 +1,11 @@
-import EbookReader from './EbookReader.vue';
+import BookReader from './BookReader.vue';
 
-export { EbookReader };
-export default EbookReader;
+export { BookReader };
+export default BookReader;
 
-// Optional Vue plugin: app.use(EbookReaderPlugin) registers <EbookReader>.
-export const EbookReaderPlugin = {
+// Optional Vue plugin: app.use(BookReaderPlugin) registers <BookReader>.
+export const BookReaderPlugin = {
     install(app, options = {}) {
-        app.component(options.name || 'EbookReader', EbookReader);
+        app.component(options.name || 'BookReader', BookReader);
     },
 };

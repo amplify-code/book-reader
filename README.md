@@ -1,6 +1,6 @@
 # @amplify-code/book-reader
 
-A headless Vue 3 **ebook reader**. It renders a book as a page-turning spread
+A headless Vue 3 **book reader**. It renders a book as a page-turning spread
 with pinch/scroll zoom, swipe and clickable link hotspots, plus optional
 colour-overlay and grayscale layers. All surrounding chrome is left to the
 host application.
@@ -41,7 +41,7 @@ Give the reader a sized parent and build your own controls around it:
 ```vue
 <script setup>
 import { ref } from 'vue';
-import { EbookReader } from '@amplify-code/book-reader';
+import { BookReader } from '@amplify-code/book-reader';
 
 const reader = ref(null);
 const page = ref(1);
@@ -64,7 +64,7 @@ const pageImageUrl = (p) => `/books/my-book/pages/${p}`;
 
         <!-- The reading surface (needs a sized container) -->
         <main style="flex: 1; min-height: 0;">
-            <EbookReader
+            <BookReader
                 ref="reader"
                 v-model:page="page"
                 :book="book"

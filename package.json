@@ -1,7 +1,7 @@
 {
     "name": "@amplify-code/book-reader",
-    "version": "1.0.0",
-    "description": "Headless Vue 3 ebook reading surface: page-turning spread, zoom, swipe and link hotspots, with all chrome left to the host.",
+    "version": "1.0.1",
+    "description": "Headless Vue 3 book reading surface: page-turning spread, zoom, swipe and link hotspots, with all chrome left to the host.",
     "keywords": [
         "vue",
         "vue3",
@@ -28,7 +28,7 @@
     "module": "src/index.js",
     "exports": {
         ".": "./src/index.js",
-        "./EbookReader.vue": "./src/EbookReader.vue",
+        "./BookReader.vue": "./src/BookReader.vue",
         "./package.json": "./package.json"
     },
     "files": [
