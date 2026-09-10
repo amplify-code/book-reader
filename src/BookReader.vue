@@ -1,6 +1,5 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import PanZ from '@thesoulfresh/pan-z';
 
 /**
  * This component contains the bare minimum reader - the page spread, page-turn
@@ -94,7 +93,12 @@ const pageWidth = ref(0);
 
 const isZoomed = ref(false);
 
-const pz = new PanZ({ minZoom: 1, bounds: 0.1, panEnabled: false });
+/**
+ * pan-z reads `window` at import time, so it is imported and instantiated in
+ * onMounted to keep the component safe to load and render during SSR. `pz` is
+ * null until then; zoom and pan are unavailable for that brief window.
+ */
+let pz = null;
 
 let touchStartX = 0;
 let touchStartY = 0;
@@ -106,7 +110,7 @@ const onTouchStart = (e) => {
 };
 
 const onTouchEnd = (e) => {
-    if (pz.scale !== 1) {
+    if (pz && pz.scale !== 1) {
         return;
     }
     const t = e.changedTouches[0];
@@ -169,7 +173,7 @@ const next = () => {
 };
 
 const goToPage = (p) => {
-    pz.reset();
+    pz?.reset();
 
     if (pagesToDisplay.value == 2) {
         if (p % 2 == 0) {
@@ -311,6 +315,10 @@ const updateLinks = () => {
 };
 
 const toggleZoom = (scale = 1) => {
+    if (!pz) {
+        return;
+    }
+
     if (pz.scale <= scale) {
         pz.zoomTo(2 * scale);
         pz.enablePan();
@@ -323,8 +331,8 @@ const toggleZoom = (scale = 1) => {
 };
 
 const resetZoom = () => {
-    pz.reset();
-    pz.disablePan();
+    pz?.reset();
+    pz?.disablePan();
     isZoomed.value = false;
 };
 
@@ -344,7 +352,7 @@ watch(
 
 let resizeObserver = null;
 
-onMounted(() => {
+onMounted(async () => {
     resize();
 
     if (current.value > 1) {
@@ -356,6 +364,20 @@ onMounted(() => {
     emit('spread-change', pagesToDisplay.value);
     logPageView(current.value);
 
+    resizeObserver = new ResizeObserver(() => {
+        resize();
+        updateLinks();
+    });
+    resizeObserver.observe(container.value);
+
+    const { default: PanZ } = await import('@thesoulfresh/pan-z');
+
+    // The component may have been unmounted while the import resolved.
+    if (!container.value) {
+        return;
+    }
+
+    pz = new PanZ({ minZoom: 1, bounds: 0.1, panEnabled: false });
     pz.init(container.value);
     pz.on('end', () => {
         if (pz.scale == 1) {
@@ -367,19 +389,13 @@ onMounted(() => {
             pz.enablePan();
         }
     });
-
-    resizeObserver = new ResizeObserver(() => {
-        resize();
-        updateLinks();
-    });
-    resizeObserver.observe(container.value);
 });
 
 onBeforeUnmount(() => {
     if (resizeObserver) {
         resizeObserver.disconnect();
     }
-    if (typeof pz.destroy === 'function') {
+    if (pz && typeof pz.destroy === 'function') {
         pz.destroy();
     }
 });
